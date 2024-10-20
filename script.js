@@ -92,12 +92,14 @@ buttons.addEventListener("click", (e) => {
     clickedBtn.classList.contains("number") &&
     !operator.match(/(\+)|(\-)|(\*)|(\/)/gim)
   ) {
+    if (display.textContent === "ERROR") {
+      display.textContent = "";
+    }
     enableOperatorBtns();
     decimalsBtn.disabled = false;
     display.textContent += clickedBtn.innerText;
     num1 += clickedBtn.innerText;
     num1 = parseFloat(num1);
-    console.log(num1);
     return (num1 = parseFloat(num1));
   } else if (
     clickedBtn.classList.contains("number") &&
@@ -109,12 +111,19 @@ buttons.addEventListener("click", (e) => {
     equalsBtn.disabled = false;
     num2 += clickedBtn.innerText;
     num2 = parseFloat(num2);
-    console.log(num2);
     return (num2 = parseFloat(num2));
   } else if (clickedBtn === equalsBtn) {
-    let result = operate(num1, num2, operator);
-    display.textContent = result;
-    console.log(result);
+    try {
+      result = Number(operate(num1, num2, operator).toFixed(10));
+    } catch (err) {
+      display.textContent = "ERROR";
+      //result = "ERROR";
+      num1 = "";
+      num2 = "";
+      operator = "";
+    }
+    // let result = Number(operate(num1, num2, operator).toFixed(10));
+    display.textContent = result.toString();
     num1 = result;
     num2 = "";
     operator = "";
