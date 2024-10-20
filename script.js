@@ -31,6 +31,19 @@ const divide = function (num1, num2) {
   return num1 / num2;
 };
 
+let displayValue = "";
+buttons.addEventListener("click", (event) => {
+  let target = event.target;
+  if (target.classList.contains("number")) {
+    displayValue += target.textContent.toString();
+    //console.log(displayValue);
+    display.textContent = displayValue;
+    return displayValue;
+  } else {
+    console.log(target.classList);
+  }
+});
+
 console.log(operate(1, 2, "+"));
 console.log(operate(1, 2, "-"));
 console.log(operate(1, 2, "*"));
