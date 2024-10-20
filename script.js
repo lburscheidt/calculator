@@ -3,6 +3,30 @@ let num2;
 let operator;
 let displayValue = "";
 
+let numberBtns = document.querySelectorAll(".number");
+let operatorBtns = document.querySelectorAll(".operator");
+let equalsBtn = document.querySelector(".operate");
+let clearBtn = document.querySelector(".clear");
+let decimalsBtn = document.querySelector(".decimal");
+
+function disableOperatorBtns() {
+  for (btn of operatorBtns) {
+    btn.disabled = true;
+  }
+}
+
+function enableOperatorBtns() {
+  for (btn of operatorBtns) {
+    btn.disabled = false;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  equalsBtn.disabled = true;
+  decimalsBtn.disabled = true;
+  disableOperatorBtns();
+});
+
 function operate(num1, num2, operator) {
   switch (operator) {
     case "+":
@@ -46,6 +70,7 @@ buttons.addEventListener("click", (e) => {
   } else if (target.classList.contains("number") && operator == undefined) {
     displayValue += target.textContent.toString();
     display.textContent = displayValue;
+    operatorBtns.disabled = false;
     return (num1 = Number(displayValue));
   } else if (target.classList.contains("number") && operator !== undefined) {
     displayValue = "";
