@@ -3,6 +3,7 @@ let num2 = "";
 let operator = "";
 
 let numberBtns = document.querySelectorAll(".number");
+
 let operatorBtns = document.querySelectorAll(".operator");
 let equalsBtn = document.querySelector(".equals");
 let clearBtn = document.querySelector(".clear");
@@ -77,26 +78,43 @@ buttons.addEventListener("click", (e) => {
     display.textContent += ` ${operator} `;
     disableOperatorBtns();
     return operator;
+  } else if (clickedBtn === decimalsBtn && num2 === "") {
+    disableOperatorBtns();
+    display.textContent += clickedBtn.innerText;
+    num1 += clickedBtn.innerText;
+    decimalsBtn.disabled = true;
+  } else if (clickedBtn === decimalsBtn && num2 !== "") {
+    disableOperatorBtns();
+    display.textContent += clickedBtn.innerText;
+    num2 += clickedBtn.innerText;
+    decimalsBtn.disabled = true;
   } else if (
     clickedBtn.classList.contains("number") &&
     !operator.match(/(\+)|(\-)|(\*)|(\/)/gim)
   ) {
     enableOperatorBtns();
+    decimalsBtn.disabled = false;
     display.textContent += clickedBtn.innerText;
     num1 += clickedBtn.innerText;
-    return (num1 = Number(num1));
+    num1 = parseFloat(num1);
+    console.log(num1);
+    return (num1 = parseFloat(num1));
   } else if (
     clickedBtn.classList.contains("number") &&
     operator.match(/(\+)|(\-)|(\*)|(\/)/gim)
   ) {
     enableOperatorBtns();
+    decimalsBtn.disabled = false;
     display.textContent += clickedBtn.innerText;
     equalsBtn.disabled = false;
     num2 += clickedBtn.innerText;
-    return (num2 = Number(num2));
+    num2 = parseFloat(num2);
+    console.log(num2);
+    return (num2 = parseFloat(num2));
   } else if (clickedBtn === equalsBtn) {
     let result = operate(num1, num2, operator);
     display.textContent = result;
+    console.log(result);
     num1 = result;
     num2 = "";
     operator = "";
