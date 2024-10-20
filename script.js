@@ -1,11 +1,10 @@
-let num1;
-let num2;
-let operator;
-let displayValue = "";
+let num1 = "";
+let num2 = "";
+let operator = "";
 
 let numberBtns = document.querySelectorAll(".number");
 let operatorBtns = document.querySelectorAll(".operator");
-let equalsBtn = document.querySelector(".operate");
+let equalsBtn = document.querySelector(".equals");
 let clearBtn = document.querySelector(".clear");
 let decimalsBtn = document.querySelector(".decimal");
 
@@ -19,6 +18,15 @@ function enableOperatorBtns() {
   for (btn of operatorBtns) {
     btn.disabled = false;
   }
+}
+
+function clearContent() {
+  display.textContent = "";
+  num1 = "";
+  num2 = "";
+  operator = "";
+  disableOperatorBtns();
+  equalsBtn.disabled = true;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -61,31 +69,37 @@ const divide = function (num1, num2) {
 };
 
 buttons.addEventListener("click", (e) => {
-  let target = e.target;
-  if (target.classList.contains("clear")) {
-    display.textContent = "";
-    num1 = "";
-    num2 = "";
-    operator = "";
-  } else if (target.classList.contains("number") && operator == undefined) {
-    displayValue += target.textContent.toString();
-    display.textContent = displayValue;
-    operatorBtns.disabled = false;
-    return (num1 = Number(displayValue));
-  } else if (target.classList.contains("number") && operator !== undefined) {
-    displayValue = "";
-    displayValue += target.textContent.toString();
-    display.textContent += displayValue;
-    return (num2 = Number(displayValue));
-  } else if (target.classList.contains("operator")) {
-    operator = target.textContent.toString();
+  let clickedBtn = e.target;
+  if (clickedBtn == clearBtn) {
+    clearContent();
+  } else if (clickedBtn.classList.contains("operator")) {
+    operator = clickedBtn.innerText;
     display.textContent += ` ${operator} `;
+    disableOperatorBtns();
     return operator;
-  } else if (target.classList.contains("operate")) {
+  } else if (
+    clickedBtn.classList.contains("number") &&
+    !operator.match(/(\+)|(\-)|(\*)|(\/)/gim)
+  ) {
+    enableOperatorBtns();
+    display.textContent += clickedBtn.innerText;
+    num1 += clickedBtn.innerText;
+    return (num1 = Number(num1));
+  } else if (
+    clickedBtn.classList.contains("number") &&
+    operator.match(/(\+)|(\-)|(\*)|(\/)/gim)
+  ) {
+    enableOperatorBtns();
+    display.textContent += clickedBtn.innerText;
+    equalsBtn.disabled = false;
+    num2 += clickedBtn.innerText;
+    return (num2 = Number(num2));
+  } else if (clickedBtn === equalsBtn) {
     let result = operate(num1, num2, operator);
     display.textContent = result;
     num1 = result;
     num2 = "";
     operator = "";
+    result = "";
   }
 });
