@@ -80,9 +80,28 @@ buttons.addEventListener("click", (e) => {
     remove = leave.pop().toString().replaceAll(",", "");
     display.textContent = leave.toString().replaceAll(",", "");
     parts = display.textContent.split(" ");
-    num1 = parts[0];
-    operator = parts[1];
-    num2 = parts[2];
+    console.log(parts);
+    if (parts != "") {
+      num1 = parts[0];
+      if (num1.match(/./gim) && !num2.match(/./gim) && num2 != undefined) {
+        decimalsBtn.disabled = true;
+      }
+      if (parts[1] == undefined) {
+        operator = "";
+      } else {
+        operator = parts[1];
+      }
+      if (parts[2] == undefined) {
+        num2 = "";
+      } else {
+        num2 = parts[2];
+      }
+      if (num2 != undefined && num2.match(/./gim)) {
+        decimalsBtn.disabled = true;
+      } else {
+        decimalsBtn.disabled = false;
+      }
+    }
   } else if (clickedBtn.classList.contains("operator")) {
     operator = clickedBtn.innerText;
     display.textContent += ` ${operator} `;
