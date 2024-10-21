@@ -8,6 +8,7 @@ let operatorBtns = document.querySelectorAll(".operator");
 let equalsBtn = document.querySelector(".equals");
 let clearBtn = document.querySelector(".clear");
 let decimalsBtn = document.querySelector(".decimal");
+let backspaceBtn = document.querySelector("#backspace");
 
 function disableOperatorBtns() {
   for (btn of operatorBtns) {
@@ -73,6 +74,10 @@ buttons.addEventListener("click", (e) => {
   let clickedBtn = e.target;
   if (clickedBtn == clearBtn) {
     clearContent();
+  } else if (clickedBtn == backspaceBtn) {
+    leave = Array.from(display.textContent);
+    remove = leave.pop().toString();
+    display.textContent = leave.toString();
   } else if (clickedBtn.classList.contains("operator")) {
     operator = clickedBtn.innerText;
     display.textContent += ` ${operator} `;
