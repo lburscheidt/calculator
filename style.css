@@ -63,3 +63,7 @@ button {
 .medium {
   width: 160px;
 }
+
+.fa-delete-left {
+  pointer-events: none;
+}
